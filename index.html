@@ -4,6 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI 人相性格診断 | あなたの運命を読み解く</title>
+    
+    <!-- ホーム画面用のアイコン設定 -->
+    <!-- GitHubのリポジトリ直下にある icon.svg を読み込みます -->
+    <link rel="icon" type="image/svg+xml" href="/icon.svg">
+    <link rel="apple-touch-icon" href="/icon.svg">
+    
+    <!-- PWA用のメタタグ (iOS/Android対応) -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="AI人相鑑定">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap');
@@ -74,24 +85,8 @@
         <header class="text-center space-y-4">
             <div class="flex justify-center">
                 <div class="w-28 h-28 relative">
-                    <!-- SVGアイコンを読み込み -->
-                    <svg viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full drop-shadow-2xl">
-                        <defs>
-                            <linearGradient id="icon_grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" style="stop-color:#10B981;stop-opacity:1" />
-                                <stop offset="100%" style="stop-color:#3B82F6;stop-opacity:1" />
-                            </linearGradient>
-                        </defs>
-                        <circle cx="256" cy="256" r="240" stroke="url(#icon_grad)" stroke-width="6" stroke-dasharray="15 15" opacity="0.4">
-                            <animateTransform attributeName="transform" type="rotate" from="0 256 256" to="360 256 256" dur="20s" repeatCount="indefinite" />
-                        </circle>
-                        <path d="M256 80C160 80 120 160 120 260C120 380 180 440 256 440C332 440 392 380 392 260C392 160 352 80 256 80Z" stroke="url(#icon_grad)" stroke-width="10" fill="none" />
-                        <path d="M185 225C195 215 215 215 225 225" stroke="white" stroke-width="7" stroke-linecap="round" />
-                        <path d="M287 225C297 215 317 215 327 225" stroke="white" stroke-width="7" stroke-linecap="round" />
-                        <path d="M256 210V310L275 325" stroke="white" stroke-width="7" stroke-linecap="round" fill="none" />
-                        <path d="M215 380C230 390 282 390 297 380" stroke="white" stroke-width="7" stroke-linecap="round" fill="none" />
-                        <path d="M256 125L263 142L280 142L267 153L272 170L256 160L240 170L245 153L232 142L249 142L256 125Z" fill="url(#icon_grad)" />
-                    </svg>
+                    <!-- GitHub上のicon.svgを表示するimgタグ（キャッシュ対策に?v=1付与） -->
+                    <img src="/icon.svg?v=1" alt="App Icon" class="w-full h-full drop-shadow-2xl">
                 </div>
             </div>
             <h1 class="text-3xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 to-blue-500">
@@ -157,7 +152,6 @@
         const scanLine = document.getElementById('scanLine');
         const resetBtn = document.getElementById('resetBtn');
 
-        // カメラ起動
         async function initCamera() {
             try {
                 const stream = await navigator.mediaDevices.getUserMedia({ 
@@ -170,7 +164,6 @@
             }
         }
 
-        // バックエンド経由で解析 (APIキーはここで直接読み込まず、サーバー側で処理)
         async function analyzeFace(base64Image) {
             try {
                 const response = await fetch('/api/analyze', {
